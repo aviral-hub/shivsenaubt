@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="mr" x-data="{ lang: 'hi' }">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .tactile-grain {
+            position: absolute; inset: 0; pointer-events: none; z-index: 10;
+            background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
+            opacity: 0.05; mix-blend-mode: overlay;
+        }
+        .sidebar-border { border-left: 4px solid #FF9933; }
+        .stat-card { background: linear-gradient(145deg, rgba(255,153,51,0.1), rgba(0,0,0,0.4)); border: 1px solid rgba(255,255,255,0.05); }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-[#050505] text-white font-sans">
+
+    <header class="py-12 px-6 border-b border-white/10 bg-gradient-to-b from-orange-950/20 to-transparent">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-6">
+                <img src="https://www.shivsena.in/images/logo.png" class="h-20 w-20 drop-shadow-[0_0_15px_rgba(255,153,51,0.5)]" alt="Sena Logo">
+                <div>
+                    <h1 class="text-4xl font-black uppercase tracking-tighter italic">संदीप घिरे <span class="text-orange-500">| Sandip Ghire</span></h1>
+                    <p class="text-gray-400 font-bold uppercase tracking-widest text-xs mt-1">District Head (Zilla Pramukh), Chandrapur</p>
+                </div>
+            </div>
+            <div class="flex bg-white/5 p-1 rounded-full border border-white/10">
+                <button @click="lang = 'hi'" :class="lang === 'hi' ? 'bg-orange-600 text-white' : 'text-gray-400'" class="px-6 py-2 rounded-full text-[10px] font-black transition-all">मराठी / हिन्दी</button>
+                <button @click="lang = 'en'" :class="lang === 'en' ? 'bg-orange-600 text-white' : 'text-gray-400'" class="px-6 py-2 rounded-full text-[10px] font-black transition-all">ENGLISH</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative py-20 overflow-hidden">
+        <div class="tactile-grain"></div>
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="relative">
+                <div class="aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
+                    <img src="https://scontent.fknu1-4.fna.fbcdn.net/v/t39.30808-6/455248172_8010142259081286_1977206895340661348_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=K7r86cZDN74Q7kNvwEcKEEB&_nc_oc=AdmIqoyARqYaZdXQYxS7liNZBqTeleZ6VM8LkOu0ntgxUBrOSx9va0wOO1IczPd3UVM&_nc_zt=23&_nc_ht=scontent.fknu1-4.fna&_nc_gid=90G36vqSoYITfCk06CUh_A&oh=00_AfpR9mW5Gyw_T4oQaUDAjTRcm-9N1GSO1k_3OO9dp__d2g&oe=696D3274" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                </div>
+                <div class="absolute -bottom-6 -right-6 bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl text-center">
+                    <p class="text-4xl font-black text-orange-500">7K+</p>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Digital Sainiks</p>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="sidebar-border pl-6">
+                    <h2 class="text-3xl font-black uppercase italic" x-text="lang === 'en' ? 'Architect of the UBT Surge' : 'ठाकरे गटाच्या मुसद्दी नेतृत्त्व'"></h2>
+                    <p class="text-gray-400 mt-2 font-bold" x-text="lang === 'en' ? 'Transforming Chandrapur into a Sena Fortress.' : 'चंद्रपूरमध्ये शिवसेनेचा गड मजबूत करणारे शिल्पकार.'"></p>
+                </div>
+
+                <p class="text-lg text-gray-300 leading-relaxed italic">
+                    "From rural hamlets to urban centers, we are building a force that prioritizes the laborer, the youth, and the pride of Vidarbha."
+                </p>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="stat-card p-6 rounded-2xl text-center">
+                        <span class="block text-2xl font-black text-orange-500 uppercase">5 Years</span>
+                        <span class="text-[10px] uppercase font-bold text-gray-500">Grassroots Growth</span>
+                    </div>
+                    <div class="stat-card p-6 rounded-2xl text-center">
+                        <span class="block text-2xl font-black text-orange-500 uppercase">50-50</span>
+                        <span class="text-[10px] uppercase font-bold text-gray-500">VBA Alliance Lead</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white/5 border-y border-white/10">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 bg-black border border-white/10 rounded-3xl hover:border-orange-600 transition-all">
+                    <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-orange-900/40">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 uppercase">Organizational Mastery</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Built Shiv Sena (UBT) from the ground up in Chandrapur. His tireless membership drives have turned the district into a "formidable force" for 2026.</p>
+                </div>
+
+                <div class="p-8 bg-black border border-white/10 rounded-3xl hover:border-orange-600 transition-all">
+                    <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-orange-900/40">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 uppercase">Strategic Alliances</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Expertly spearheaded the 50-50 seat sharing with VBA. Attracted 25-year veterans and rival party leaders like Satish Nandaram to the Mashaal.</p>
+                </div>
+
+                <div class="p-8 bg-black border border-white/10 rounded-3xl hover:border-orange-600 transition-all">
+                    <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-orange-900/40">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 uppercase">Labor Guardian</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">As ST Kamgar Sena Divisional President, he represents the backbone of the coal-rich Vidarbha region, fighting for laborers and marginalized communities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h3 class="text-center text-3xl font-black uppercase mb-16 tracking-[0.3em] text-orange-500 italic">कार्य अहवाल | The Action Report</h3>
+            
+            <div class="space-y-12">
+                <div class="flex gap-8 group">
+                    <div class="w-32 text-right">
+                        <span class="text-xs font-black text-gray-600 group-hover:text-orange-500">2021-2024</span>
+                    </div>
+                    <div class="flex-1 pb-12 border-l border-white/10 pl-8 relative">
+                        <div class="absolute -left-1.5 top-2 w-3 h-3 bg-white/20 rounded-full group-hover:bg-orange-600"></div>
+                        <h4 class="text-lg font-bold text-white uppercase">The Resurgence</h4>
+                        <p class="text-gray-400 text-sm mt-1">Rebuilt the party from the booth level, establishing presence in rural Mul, Rajura, and urban Chandrapur.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-8 group">
+                    <div class="w-32 text-right">
+                        <span class="text-xs font-black text-gray-600 group-hover:text-orange-500">Late 2025</span>
+                    </div>
+                    <div class="flex-1 pb-12 border-l border-white/10 pl-8 relative">
+                        <div class="absolute -left-1.5 top-2 w-3 h-3 bg-white/20 rounded-full group-hover:bg-orange-600"></div>
+                        <h4 class="text-lg font-bold text-white uppercase">Unified Front</h4>
+                        <p class="text-gray-400 text-sm mt-1">Announced the historic alliance for CMC elections, uniting local civic issues under a single development banner.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-8 group">
+                    <div class="w-32 text-right">
+                        <span class="text-xs font-black text-orange-600">2026 Goal</span>
+                    </div>
+                    <div class="flex-1 pl-8 relative">
+                        <div class="absolute -left-1.5 top-2 w-3 h-3 bg-orange-600 rounded-full"></div>
+                        <h4 class="text-lg font-bold text-white uppercase italic">The Ballarpur Target</h4>
+                        <p class="text-gray-400 text-sm mt-1">Leading high-energy 'Mashaal Morchas' and mobilizing workers for an ambitious victory in the Ballarpur Assembly seat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 text-center border-t border-white/10">
+        <h3 class="text-2xl font-bold mb-8 italic">Be Part of the Chandrapur Revolution</h3>
+        <div class="flex flex-col md:flex-row justify-center gap-6 px-6">
+            <button class="bg-orange-600 hover:bg-orange-500 text-white px-12 py-5 font-black uppercase tracking-widest text-xs rounded-full shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all">Support Sandip Ghire</button>
+            <button class="border border-white/20 hover:bg-white hover:text-black text-white px-12 py-5 font-black uppercase tracking-widest text-xs rounded-full transition-all">Follow on Instagram</button>
+        </div>
+    </footer>
+
+</body>
+</html>
