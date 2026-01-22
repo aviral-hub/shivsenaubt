@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiv Sena (UBT) Ballarpur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Marathi:wght@400;700;900&family=Outfit:wght@300;600;900&display=swap');
+        
+        :root { --sena-orange: #FF6634; }
+        body { font-family: 'Outfit', 'Noto Sans Marathi', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        
+        .bg-sena { background: linear-gradient(135deg, #FF6634 0%, #ff8e6b 100%); }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .bento-item { @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer; }
+        
+        /* Custom Checkbox Logic */
+        input:checked + .choice-ui { border-color: var(--sena-orange); background: #fff7f5; color: var(--sena-orange); }
+        input:checked + .choice-ui .icon-bg { background: var(--sena-orange); color: white; }
+    </style>
+</head>
+<body class="bg-[#fcfcfc] min-h-screen">
+
+    <nav class="sticky top-0 z-50 glass-card px-6 py-4 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-3">
+            <img src="https://www.shivsena.in/images/logo.png" class="w-10 h-10 object-contain" alt="Logo">
+            <div>
+                <h1 class="font-black text-lg leading-none text-gray-900 tracking-tighter uppercase">शिवसेना (उबाठा)</h1>
+                <p class="text-[10px] font-bold text-orange-600 tracking-widest">बल्लारपूर विधानसभा</p>
+            </div>
+        </div>
+        <div class="flex flex-col items-end">
+            <span class="text-[9px] font-bold text-gray-400 uppercase">जन-समस्या पोर्टल</span>
+            <div class="h-1 w-8 bg-orange-500 rounded-full mt-1"></div>
+        </div>
+    </nav>
+
+    <main class="max-w-xl mx-auto p-6 space-y-8">
+        
+        <section class="flex items-center gap-4 bg-white p-4 rounded-[2rem] shadow-sm border border-gray-100">
+            <div class="flex -space-x-4">
+                <div class="w-12 h-12 rounded-full border-4 border-white sena-orange shadow-md flex items-center justify-center text-white font-bold text-xs overflow-hidden">SY</div>
+                <div class="w-12 h-12 rounded-full border-4 border-white bg-blue-600 shadow-md flex items-center justify-center text-white font-bold text-xs overflow-hidden">PP</div>
+            </div>
+            <div>
+                <p class="text-[10px] font-black text-orange-600 uppercase tracking-widest">विशेष पुढाकार</p>
+                <h2 class="text-sm font-bold text-gray-800">सिकी यादव & प्रकाश पाठक</h2>
+            </div>
+        </section>
+
+        <form id="complaintForm" class="space-y-8">
+            
+            <div class="space-y-4">
+                <h3 class="px-2 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">१. तुमची माहिती (Your Info)</h3>
+                <div class="grid grid-cols-1 gap-4">
+                    <input type="text" id="vName" placeholder="तुमचे पूर्ण नाव" class="w-full bg-white p-5 rounded-[1.5rem] shadow-sm border-none focus:ring-2 focus:ring-orange-500 text-sm">
+                    <div class="flex gap-3">
+                        <input type="tel" id="vPhone" placeholder="मोबाईल नंबर" class="w-2/3 bg-white p-5 rounded-[1.5rem] shadow-sm border-none text-sm">
+                        <select id="vWard" class="w-1/3 bg-white p-5 rounded-[1.5rem] shadow-sm border-none text-xs font-bold text-orange-600">
+                            <option value="">वार्ड</option>
+                            <script>for(let i=1;i<=32;i++) document.write(`<option value="${i}">${i}</option>`)</script>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="px-2 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">२. राहण्याचा पत्ता (Detailed Address)</h3>
+                <textarea id="vAddress" rows="3" placeholder="उदा. घर क्रमांक, गल्लीचे नाव आणि परिसरातील मुख्य खुणा..." class="w-full bg-white p-5 rounded-[2rem] shadow-sm border-none focus:ring-2 focus:ring-orange-500 text-sm leading-relaxed" required></textarea>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="px-2 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">३. समस्येचा प्रकार (Select Topic)</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <label class="relative group">
+                        <input type="radio" name="topic" value="पाणी पुरवठा" class="hidden" checked>
+                        <div class="choice-ui bento-item bg-white p-6 rounded-[2rem] border-2 border-transparent shadow-sm flex flex-col items-center gap-3">
+                            <div class="icon-bg w-12 h-12 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center text-2xl transition-all">🚰</div>
+                            <span class="text-[11px] font-black uppercase tracking-tight">पाणी पुरवठा</span>
+                        </div>
+                    </label>
+                    <label class="relative group">
+                        <input type="radio" name="topic" value="रस्ते/गटर" class="hidden">
+                        <div class="choice-ui bento-item bg-white p-6 rounded-[2rem] border-2 border-transparent shadow-sm flex flex-col items-center gap-3">
+                            <div class="icon-bg w-12 h-12 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center text-2xl transition-all">🛣️</div>
+                            <span class="text-[11px] font-black uppercase tracking-tight">रस्ते / खड्डे</span>
+                        </div>
+                    </label>
+                    <label class="relative group">
+                        <input type="radio" name="topic" value="लाईट/विद्युत" class="hidden">
+                        <div class="choice-ui bento-item bg-white p-6 rounded-[2rem] border-2 border-transparent shadow-sm flex flex-col items-center gap-3">
+                            <div class="icon-bg w-12 h-12 rounded-2xl bg-yellow-50 text-yellow-500 flex items-center justify-center text-2xl transition-all">💡</div>
+                            <span class="text-[11px] font-black uppercase tracking-tight">स्ट्रीट लाईट</span>
+                        </div>
+                    </label>
+                    <label class="relative group">
+                        <input type="radio" name="topic" value="इतर समस्या" class="hidden">
+                        <div class="choice-ui bento-item bg-white p-6 rounded-[2rem] border-2 border-transparent shadow-sm flex flex-col items-center gap-3">
+                            <div class="icon-bg w-12 h-12 rounded-2xl bg-gray-50 text-gray-500 flex items-center justify-center text-2xl transition-all">⚙️</div>
+                            <span class="text-[11px] font-black uppercase tracking-tight">इतर समस्या</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="px-2 text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">४. समस्या सांगा (Details)</h3>
+                <textarea id="vDesc" rows="4" placeholder="तुमची तक्रार येथे सविस्तर लिहा..." class="w-full bg-white p-6 rounded-[2rem] shadow-sm border-none focus:ring-2 focus:ring-orange-500 text-sm"></textarea>
+            </div>
+
+            <div class="pt-6">
+                <button type="button" onclick="submitToSena()" class="w-full bg-sena text-white py-6 rounded-[2.5rem] font-black text-xl shadow-[0_20px_40px_-10px_rgba(255,102,52,0.4)] flex items-center justify-center gap-4 active:scale-95 transition-all">
+                    <span>सबमिट करा</span>
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                </button>
+                <div class="mt-8 text-center">
+                    <p class="text-[9px] font-bold text-gray-300 uppercase tracking-[0.4em]">शिवसेना उबाठा - महाराष्ट्र प्रथम</p>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        function submitToSena() {
+            const data = {
+                name: document.getElementById('vName').value,
+                phone: document.getElementById('vPhone').value,
+                ward: document.getElementById('vWard').value,
+                addr: document.getElementById('vAddress').value,
+                topic: document.querySelector('input[name="topic"]:checked').value,
+                desc: document.getElementById('vDesc').value
+            };
+
+            if(!data.name || !data.addr) { alert("कृपया नाव आणि पत्ता भरा!"); return; }
+
+            const msg = `🚩 *बल्लारपूर जन-समस्या निवारण* 🚩%0A%0A*मतदार:* ${data.name}%0A*मोबाईल:* ${data.phone}%0A*वार्ड:* ${data.ward}%0A*पत्ता:* ${data.addr}%0A%0A*विषय:* ${data.topic}%0A*तक्रार:* ${data.desc}%0A%0A_Initive by Sikky Yadav & Prakash Pathak_`;
+            window.open(`https://wa.me/919322683689?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
