@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiv Sena Ballarpur | Pro Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,900&family=Outfit:wght@300;900&family=Noto+Sans+Marathi:wght@400;900&display=swap');
+        
+        body {
+            background-color: #080808;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Outfit', 'Noto Sans Marathi', sans-serif;
+        }
+
+        /* 4:5 Ratio Container */
+        .pro-poster {
+            width: 100vw;
+            max-width: 450px;
+            aspect-ratio: 4 / 5;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        /* High-Pro Background Gradient */
+        .bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 102, 52, 0.12) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        .saheb-bg {
+            position: absolute;
+            bottom: 0;
+            right: -10%;
+            height: 90%;
+            opacity: 0.35;
+            z-index: 2;
+            filter: grayscale(100%) contrast(110%);
+        }
+
+        .text-gold {
+            background: linear-gradient(to bottom, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-cta {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .mashaal-glow {
+            filter: drop-shadow(0 0 15px rgba(255, 102, 52, 0.6));
+        }
+    </style>
+</head>
+<body>
+
+    <section class="pro-poster">
+        <div class="bg-glow"></div>
+        
+        <img src="https://www.shivsena.in/images/saheb_unit.png" class="saheb-bg" alt="Balasaheb Thackeray">
+
+        <div class="relative z-10 h-full flex flex-col p-8">
+            
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-[9px] font-black tracking-[0.4em] text-orange-500 uppercase">बल्लारपूर विधानसभा</p>
+                    <h1 class="text-2xl font-black text-white italic tracking-tighter leading-none">SHIV SENA <br><span class="text-orange-600">UBT</span></h1>
+                </div>
+                <img src="https://www.shivsena.in/images/logo.png" class="h-16 mashaal-glow" alt="Mashaal">
+            </div>
+
+            <div class="mt-12 max-w-[70%]">
+                <h2 class="text-5xl font-black text-white italic leading-[0.9] tracking-tighter">
+                    थेट तक्रार <br>
+                    <span class="text-gold">निवारण</span> <br>
+                    कक्ष
+                </h2>
+                <div class="h-1 w-16 bg-orange-600 mt-4"></div>
+            </div>
+
+            <div class="mt-6 max-w-[60%]">
+                <p class="text-white/60 text-[10px] font-bold leading-relaxed uppercase tracking-widest">
+                    तुमच्या समस्या, आमचे समाधान. बाळासाहेबांच्या विचाराने जनतेची सेवा.
+                </p>
+            </div>
+
+            <div class="mt-auto mb-4 glass-cta p-6 rounded-[2rem]">
+                <p class="text-orange-500 font-black text-[9px] uppercase tracking-[0.3em] mb-3">Public Grievance Portal 2026</p>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-white text-lg font-black leading-tight uppercase">समस्या आम्हाला सांगा</h3>
+                    <a href="https://wa.me/919322683689" class="h-12 w-12 bg-white rounded-2xl flex items-center justify-center hover:bg-orange-600 transition-colors group">
+                        <svg class="w-6 h-6 text-black group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center border-t border-white/10 pt-4">
+                <span class="text-[7px] text-white/30 font-black uppercase tracking-[0.5em]">Courage • Justice • Service</span>
+                <span class="text-[7px] text-white/30 font-black uppercase tracking-[0.5em]">Elections 2026</span>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
