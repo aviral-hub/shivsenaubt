@@ -6,106 +6,93 @@
     <title>Shiv Sena UBT | Digital Membership</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&display=swap');
-        body { font-family: 'Outfit', sans-serif; background: #080808; color: white; }
-        .id-card-glow { box-shadow: 0 0 50px -10px rgba(255, 102, 52, 0.4); border: 1px solid rgba(255, 102, 52, 0.3); }
+        body { font-family: 'Outfit', sans-serif; background: #050505; color: white; }
+        .id-card-glow { box-shadow: 0 0 40px -10px rgba(255, 102, 52, 0.5); }
         .sena-gradient { background: linear-gradient(135deg, #FF6634 0%, #CC4400 100%); }
-        .mashaal-watermark { position: absolute; bottom: -20px; right: -20px; width: 150px; opacity: 0.05; pointer-events: none; }
+        .step-badge { @apply w-6 h-6 rounded-full bg-orange-500 text-black text-[10px] font-black flex items-center justify-center; }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col items-center py-10">
+<body class="antialiased min-h-screen flex flex-col items-center py-6">
 
-    <div class="text-center mb-10 px-6">
-        <img src="https://www.shivsena.in/images/logo.png" class="h-16 mx-auto mb-4" alt="Logo">
-        <h1 class="text-3xl font-black uppercase italic tracking-tighter">सक्रिय सदस्य नोंदणी</h1>
-        <p class="text-orange-500 font-bold uppercase tracking-widest text-[10px] mt-2">बल्लारपूर विधानसभा | सिकी यादव - प्रकाश पाठक</p>
+    <div class="text-center mb-6 px-6">
+        <img src="https://www.shivsena.in/images/logo.png" class="h-14 mx-auto mb-2" alt="Logo">
+        <h1 class="text-2xl font-black uppercase italic tracking-tighter">डिजिटल सदस्य नोंदणी</h1>
     </div>
 
-    <div class="w-full max-w-md px-6">
+    <div class="w-full max-w-sm px-6">
         
-        <template x-if="!isGenerated">
-            <form @submit.prevent="generateCard" class="bg-[#111] p-8 rounded-[2.5rem] border border-white/5 space-y-6">
-                
-                <div class="flex flex-col items-center">
-                    <label class="cursor-pointer group relative">
-                        <input type="file" @change="handlePhoto" class="hidden" accept="image/*">
-                        <div class="w-24 h-24 rounded-full border-2 border-dashed border-gray-700 flex items-center justify-center overflow-hidden group-hover:border-orange-500 transition-all">
-                            <template x-if="!photo">
-                                <span class="text-[10px] text-gray-500 font-bold uppercase text-center">फोटो जोडा<br>(Add Photo)</span>
-                            </template>
-                            <template x-if="photo">
-                                <img :src="photo" class="w-full h-full object-cover">
-                            </template>
-                        </div>
-                    </label>
-                </div>
-
-                <div class="space-y-4">
-                    <input type="text" x-model="formData.name" placeholder="पूर्ण नाव (Full Name)" class="w-full bg-black border border-white/10 p-4 rounded-2xl outline-none focus:border-orange-500 text-sm" required>
-                    <input type="tel" x-model="formData.phone" placeholder="मोबाईल नंबर" class="w-full bg-black border border-white/10 p-4 rounded-2xl text-sm outline-none" required>
-                    <select x-model="formData.ward" class="w-full bg-black border border-white/10 p-4 rounded-2xl text-sm font-bold text-orange-500 outline-none">
-                        <option value="">वार्ड निवडा</option>
-                        <script>for(let i=1;i<=32;i++) document.write(`<option value="${i}">वार्ड ${i}</option>`)</script>
-                    </select>
-                </div>
-
-                <button type="submit" :disabled="loading" class="w-full sena-gradient py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl active:scale-95 transition-all">
-                    <span x-show="!loading">डिजिटल कार्ड तयार करा</span>
-                    <span x-show="loading">नोंदणी होत आहे...</span>
-                </button>
-            </form>
-        </template>
-
-        <template x-if="isGenerated">
-            <div class="space-y-8">
-                <div class="id-card-glow bg-[#1a1a1a] rounded-[2.5rem] overflow-hidden relative aspect-[3/4.5] flex flex-col">
-                    
-                    <img src="https://www.shivsena.in/images/logo.png" class="mashaal-watermark">
-
-                    <div class="sena-gradient p-6 text-center">
-                        <p class="text-[9px] font-black uppercase tracking-[0.3em] text-white/80">Shiv Sena (UBT)</p>
-                        <h2 class="text-xl font-black italic uppercase tracking-tighter mt-1">Digital Member</h2>
+        <div x-show="!isGenerated" class="bg-[#111] p-6 rounded-[2rem] border border-white/5 space-y-5">
+            <div class="flex flex-col items-center">
+                <label class="cursor-pointer group relative">
+                    <input type="file" @change="handlePhoto" class="hidden" accept="image/*">
+                    <div class="w-20 h-20 rounded-full border-2 border-dashed border-gray-700 flex items-center justify-center overflow-hidden group-hover:border-orange-500 transition-all">
+                        <template x-if="!photo"><span class="text-[8px] text-gray-500 font-black uppercase text-center">फोटो<br>UPLOAD</span></template>
+                        <template x-if="photo"><img :src="photo" class="w-full h-full object-cover"></template>
                     </div>
+                </label>
+            </div>
+            <input type="text" x-model="formData.name" placeholder="पूर्ण नाव (Full Name)" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none focus:border-orange-500">
+            <input type="tel" x-model="formData.phone" placeholder="मोबाईल नंबर" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none">
+            <button @click="generateCard" :disabled="loading" class="w-full sena-gradient py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-xl">
+                <span x-text="loading ? 'प्रतीक्षा करा...' : 'कार्ड तयार करा'"></span>
+            </button>
+        </div>
 
-                    <div class="flex-1 flex flex-col items-center pt-8 px-8 text-center space-y-4">
-                        <div class="w-32 h-32 rounded-3xl border-4 border-orange-500/30 overflow-hidden shadow-2xl">
-                            <img :src="photo" class="w-full h-full object-cover">
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-2xl font-black tracking-tight" x-text="formData.name"></h3>
-                            <p class="text-orange-500 font-bold text-[10px] uppercase tracking-[0.2em] mt-1">Ballarpur Constituency</p>
-                        </div>
-
-                        <div class="w-full grid grid-cols-2 gap-4 pt-6 mt-4 border-t border-white/5">
-                            <div class="text-left">
-                                <span class="text-[8px] text-gray-500 uppercase font-black">Member ID</span>
-                                <p class="text-[10px] font-bold">#UBT-2026</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-[8px] text-gray-500 uppercase font-black">Ward No.</span>
-                                <p class="text-[10px] font-bold" x-text="formData.ward"></p>
-                            </div>
-                        </div>
+        <div x-show="isGenerated" x-cloak class="space-y-6">
+            
+            <div class="bg-orange-500/10 border border-orange-500/20 p-4 rounded-2xl space-y-3">
+                <h4 class="text-orange-500 font-black text-[10px] uppercase tracking-widest">कसे शेअर करावे? (Sharing Steps)</h4>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3 text-[11px] font-bold">
+                        <span class="step-badge">1</span> 'Download Card' वर क्लिक करून फोटो सेव्ह करा.
                     </div>
-
-                    <div class="bg-black/40 p-6 flex justify-between items-end border-t border-white/5">
-                        <div class="space-y-1">
-                            <p class="text-[7px] text-orange-500 font-black uppercase tracking-widest">Authorized By</p>
-                            <p class="text-[10px] font-bold text-white/90 leading-none">Sikki Yadav</p>
-                            <p class="text-[10px] font-bold text-white/90 leading-none">Prakash Pathak</p>
-                        </div>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" class="h-10 w-10 invert opacity-40">
+                    <div class="flex items-center gap-3 text-[11px] font-bold">
+                        <span class="step-badge">2</span> खाली दिलेला 'Copy Caption' बटन दाबा.
                     </div>
-                </div>
-
-                <div class="flex flex-col gap-3">
-                    <button onclick="window.print()" class="w-full bg-white text-black py-4 rounded-2xl font-black text-xs uppercase tracking-widest">Download ID Card</button>
-                    <button @click="isGenerated = false" class="text-gray-500 font-bold text-[10px] uppercase text-center">Back to Registration</button>
+                    <div class="flex items-center gap-3 text-[11px] font-bold">
+                        <span class="step-badge">3</span> WhatsApp/FB वर फोटो टाकून कॅप्शन पेस्ट करा!
+                    </div>
                 </div>
             </div>
-        </template>
+
+            <div id="captureArea" class="id-card-glow bg-[#151515] rounded-[2rem] overflow-hidden relative aspect-[3/4.2] flex flex-col border border-white/10">
+                <div class="sena-gradient p-5 text-center">
+                    <img src="https://www.shivsena.in/images/logo.png" class="h-8 mx-auto mb-1 brightness-0 invert" alt="">
+                    <h2 class="text-lg font-black italic uppercase">Digital Member</h2>
+                </div>
+                <div class="flex-1 flex flex-col items-center justify-center p-6 text-center space-y-4">
+                    <div class="w-28 h-28 rounded-2xl border-4 border-orange-500/20 overflow-hidden shadow-xl">
+                        <img :src="photo" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-black tracking-tight uppercase" x-text="formData.name"></h3>
+                        <p class="text-orange-500 font-bold text-[9px] uppercase tracking-[0.2em]">Ballarpur Constituency</p>
+                    </div>
+                </div>
+                <div class="bg-black/40 p-5 flex justify-between items-end border-t border-white/5">
+                    <div class="text-left">
+                        <p class="text-[7px] text-orange-500 font-black uppercase">Leadership</p>
+                        <p class="text-[9px] font-bold leading-tight">Sikki Yadav<br>Prakash Pathak</p>
+                    </div>
+                    <div class="text-right text-[8px] font-bold text-gray-500 uppercase italic">Active Member 2026</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <button @click="downloadID" class="bg-white text-black py-4 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                    📥 Download Card
+                </button>
+                <button @click="copyCaption" class="bg-blue-600 text-white py-4 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                    📋 <span x-text="copyText">Copy Caption</span>
+                </button>
+            </div>
+            
+            <button @click="isGenerated = false" class="w-full text-gray-600 font-bold text-[9px] uppercase text-center">नवीन नोंदणी करा</button>
+        </div>
     </div>
 
     <script>
@@ -114,8 +101,10 @@
                 isGenerated: false,
                 loading: false,
                 photo: null,
-                formData: { name: '', phone: '', ward: '' },
-                
+                copyText: 'Copy Caption',
+                formData: { name: '', phone: '' },
+                caption: `मेरा शिवसेना सदस्यता कार्ड तैयार है! 💪\nशिवसेना परिवार का हिस्सा बनकर गर्व महसूस हो रहा है।\nजुड़ें और अपनी शिवसैनिक पहचान पाएं! 🚩\n👉 https://shivsenaubt.vercel.app/membership.html\nजय महाराष्ट्र!`,
+
                 handlePhoto(e) {
                     const file = e.target.files[0];
                     const reader = new FileReader();
@@ -123,30 +112,26 @@
                     reader.readAsDataURL(file);
                 },
 
-                async generateCard() {
-                    if(!this.photo) { alert("कृपया फोटो अपलोड करा!"); return; }
+                generateCard() {
+                    if(!this.photo || !this.formData.name) { alert("नाव आणि फोटो आवश्यक आहे!"); return; }
                     this.loading = true;
+                    setTimeout(() => { this.loading = false; this.isGenerated = true; }, 1000);
+                },
 
-                    // Background Submission to Formspree
-                    const body = new FormData();
-                    body.append('name', this.formData.name);
-                    body.append('phone', this.formData.phone);
-                    body.append('ward', this.formData.ward);
+                downloadID() {
+                    const el = document.getElementById('captureArea');
+                    html2canvas(el, { scale: 3, useCORS: true }).then(canvas => {
+                        const link = document.createElement('a');
+                        link.download = `Sena_Card_${this.formData.name}.png`;
+                        link.href = canvas.toDataURL("image/png");
+                        link.click();
+                    });
+                },
 
-                    try {
-                        await fetch('https://formspree.io/f/meeeqrad', {
-                            method: 'POST',
-                            body: body,
-                            headers: { 'Accept': 'application/json' }
-                        });
-                        
-                        this.loading = false;
-                        this.isGenerated = true;
-                    } catch (error) {
-                        alert("Submission failed, but generating card...");
-                        this.loading = false;
-                        this.isGenerated = true;
-                    }
+                copyCaption() {
+                    navigator.clipboard.writeText(this.caption);
+                    this.copyText = 'Copied! ✅';
+                    setTimeout(() => { this.copyText = 'Copy Caption'; }, 2000);
                 }
             }
         }
