@@ -3,102 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shiv Sena UBT | Maharashtra Membership</title>
+    <title>Shiv Sena UBT | Chandrapur Membership</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&display=swap');
-        body { font-family: 'Outfit', sans-serif; background: #050505; color: white; }
-        .id-card-glow { box-shadow: 0 0 50px -10px rgba(255, 102, 52, 0.5); }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&family=Noto+Sans+Marathi:wght@400;900&display=swap');
+        body { font-family: 'Outfit', 'Noto Sans Marathi', sans-serif; background: #050505; color: white; }
+        
+        .business-card {
+            width: 100%;
+            aspect-ratio: 1.75 / 1; 
+            background: #111;
+            border: 1px solid rgba(255, 102, 52, 0.3);
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px -10px rgba(255, 102, 52, 0.5);
+        }
+
         .sena-gradient { background: linear-gradient(135deg, #FF6634 0%, #CC4400 100%); }
         .step-badge { @apply w-5 h-5 rounded-full bg-orange-500 text-black text-[9px] font-black flex items-center justify-center inline-flex mr-2; }
-        select option { background: #111; color: white; }
         [x-cloak] { display: none !important; }
     </style>
 </head>
 <body class="antialiased min-h-screen py-6 flex flex-col items-center">
 
-    <div class="text-center mb-6">
-        <img src="https://www.shivsena.in/images/logo.png" class="h-14 mx-auto mb-2" alt="Logo">
-        <h1 class="text-2xl font-black uppercase italic tracking-tighter">महाराष्ट्र सदस्य नोंदणी</h1>
-        <p class="text-orange-500 font-bold text-[9px] uppercase tracking-widest">Shiv Sena (Uddhav Balasaheb Thackeray)</p>
+    <div class="text-center mb-6 px-6">
+        <img src="https://www.shivsena.in/images/logo.png" class="h-12 mx-auto mb-2" alt="Logo">
+        <h1 class="text-2xl font-black uppercase italic tracking-tighter">चंद्रपूर जिल्हा नोंदणी</h1>
+        <p class="text-orange-500 font-bold text-[9px] uppercase tracking-widest mt-1">शिवसेना (उद्धव बाळासाहेब ठाकरे)</p>
     </div>
 
     <div class="w-full max-w-sm px-6">
         
         <div x-show="!isGenerated" class="bg-[#111] p-6 rounded-[2.5rem] border border-white/5 space-y-4">
-            
             <div class="flex justify-center mb-2">
                 <label class="cursor-pointer group">
                     <input type="file" @change="handlePhoto" class="hidden" accept="image/*">
-                    <div class="w-20 h-20 rounded-full border-2 border-dashed border-gray-700 flex items-center justify-center overflow-hidden group-hover:border-orange-500 transition-all">
-                        <template x-if="!photo"><span class="text-[8px] text-gray-500 font-black uppercase text-center">फोटो<br>Upload</span></template>
+                    <div class="w-20 h-20 rounded-2xl border-2 border-dashed border-gray-700 flex items-center justify-center overflow-hidden group-hover:border-orange-500 transition-all">
+                        <template x-if="!photo"><span class="text-[8px] text-gray-500 font-black text-center uppercase">फोटो जोडा</span></template>
                         <template x-if="photo"><img :src="photo" class="w-full h-full object-cover"></template>
                     </div>
                 </label>
             </div>
 
-            <input type="text" x-model="formData.name" placeholder="पूर्ण नाव (Full Name)" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none focus:border-orange-500">
-            
-            <select x-model="formData.district" @change="updateTalukas" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none text-orange-500 font-bold">
-                <option value="">जिल्हा निवडा (Select District)</option>
-                <template x-for="dist in Object.keys(geoData)">
-                    <option :value="dist" x-text="dist"></option>
-                </template>
-            </select>
+            <div class="space-y-3">
+                <input type="text" x-model="formData.name" placeholder="पूर्ण नाव (Full Name)" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none focus:border-orange-500">
+                
+                <input type="tel" x-model="formData.phone" placeholder="मोबाईल नंबर (WhatsApp)" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none focus:border-orange-500">
+                
+                <select x-model="formData.taluka" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm text-orange-500 font-bold outline-none">
+                    <option value="">तालुका निवडा (Select Taluka)</option>
+                    <template x-for="t in talukas">
+                        <option :value="t" x-text="t"></option>
+                    </template>
+                </select>
 
-            <select x-model="formData.taluka" :disabled="!formData.district" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none disabled:opacity-30">
-                <option value="">तालुका निवडा (Select Taluka)</option>
-                <template x-for="tal in talukas">
-                    <option :value="tal" x-text="tal"></option>
-                </template>
-            </select>
-
-            <textarea x-model="formData.address" placeholder="पूर्ण पत्ता (Manual Address)" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none focus:border-orange-500 h-20"></textarea>
+                <textarea x-model="formData.address" placeholder="गल्ली/वॉर्ड आणि पूर्ण पत्ता (Manual Address)" class="w-full bg-black border border-white/10 p-4 rounded-xl text-sm outline-none h-20"></textarea>
+            </div>
 
             <button @click="generateCard" :disabled="loading" class="w-full sena-gradient py-4 rounded-xl font-black text-xs uppercase tracking-widest shadow-xl">
-                <span x-text="loading ? 'नोंदणी होत आहे...' : 'डिजिटल कार्ड मिळवा'"></span>
+                <span x-text="loading ? 'नोंदणी होत आहे...' : 'डिजिटल कार्ड तयार करा'"></span>
             </button>
         </div>
 
         <div x-show="isGenerated" x-cloak class="space-y-6">
             
-            <div class="bg-orange-500/5 border border-orange-500/20 p-5 rounded-3xl">
-                <p class="text-[11px] font-bold mb-3 leading-relaxed">
-                    <span class="step-badge">1</span> 'Download ID' वर क्लिक करून फोटो सेव्ह करा.<br>
-                    <span class="step-badge">2</span> 'Copy Caption' दाबून मजकूर कॉपी करा.<br>
-                    <span class="step-badge">3</span> WhatsApp Status वर फोटोसह शेअर करा!
-                </p>
-                <div class="grid grid-cols-2 gap-2">
-                    <button @click="downloadID" class="bg-white text-black py-3 rounded-xl font-black text-[9px] uppercase">📥 Download ID</button>
-                    <button @click="copyCaption" class="bg-blue-600 text-white py-3 rounded-xl font-black text-[9px] uppercase" x-text="copyBtnText"></button>
-                </div>
+            <div class="bg-orange-500/10 border border-orange-500/20 p-4 rounded-2xl text-[10px] font-bold">
+                <p><span class="step-badge">1</span> 'Download Card' वर क्लिक करा.</p>
+                <p class="mt-2"><span class="step-badge">2</span> 'Copy Caption' दाबून स्टेटसवर शेअर करा.</p>
             </div>
 
-            <div id="idCard" class="id-card-glow bg-[#181818] rounded-[2.5rem] overflow-hidden relative aspect-[3/4.5] flex flex-col border border-white/10">
-                <div class="sena-gradient p-5 text-center">
-                    <img src="https://www.shivsena.in/images/logo.png" class="h-10 mx-auto mb-1 brightness-0 invert" alt="">
-                    <h2 class="text-lg font-black italic uppercase tracking-tighter">Digital Identity</h2>
+            <div id="idCard" class="business-card bg-black">
+                <div class="absolute top-0 left-0 right-0 h-[28%] sena-gradient px-3 flex justify-between items-center">
+                    <img src="https://www.shivsena.in/images/saheb_unit.png" class="h-8 md:h-10" alt="Leader">
+                    <div class="text-center">
+                        <p class="text-[6px] font-black uppercase text-white/80">Shiv Sena (UBT)</p>
+                        <h2 class="text-[10px] font-black italic tracking-tighter">MEMBER IDENTITY</h2>
+                    </div>
+                    <img src="https://www.shivsena.in/images/logo.png" class="h-7 brightness-0 invert" alt="Mashaal">
                 </div>
-                
-                <div class="flex-1 flex flex-col items-center justify-center p-6 text-center space-y-4">
-                    <div class="w-28 h-28 rounded-3xl border-4 border-orange-500/10 overflow-hidden shadow-2xl">
+
+                <div class="absolute top-[28%] left-0 right-0 bottom-0 p-3 flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-lg border-2 border-orange-500/20 overflow-hidden shrink-0 shadow-lg">
                         <img :src="photo" class="w-full h-full object-cover">
                     </div>
-                    <div>
-                        <h3 class="text-xl font-black tracking-tight" x-text="formData.name"></h3>
-                        <p class="text-orange-500 font-bold text-[8px] uppercase tracking-[0.2em] mt-1" x-text="formData.district + ' | ' + formData.taluka"></p>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-sm font-black uppercase text-white truncate" x-text="formData.name"></h3>
+                        <p class="text-orange-500 font-bold text-[8px] uppercase tracking-widest" x-text="'तालुका: ' + formData.taluka"></p>
+                        <p class="text-gray-500 text-[7px] font-bold truncate mt-0.5" x-text="formData.address"></p>
                     </div>
-                    <p class="text-[9px] text-gray-500 italic px-4" x-text="formData.address"></p>
                 </div>
 
-                <div class="bg-black/40 p-5 border-t border-white/5 text-center">
-                    <p class="text-[7px] text-orange-500 font-black uppercase tracking-widest mb-1">Approved Membership</p>
-                    <p class="text-[9px] font-bold text-white/80 uppercase">Shiv Sena (UBT) Maharashtra</p>
+                <div class="absolute bottom-1 right-3 text-[5px] text-gray-700 font-black uppercase">
+                    Ballarpur Vidhansabha 2026
                 </div>
             </div>
 
+            <div class="grid grid-cols-2 gap-3">
+                <button @click="downloadID" class="bg-white text-black py-4 rounded-xl font-black text-[9px] uppercase tracking-widest">📥 Download Card</button>
+                <button @click="copyCaption" class="bg-blue-600 text-white py-4 rounded-xl font-black text-[9px] uppercase tracking-widest" x-text="copyBtnText"></button>
+            </div>
+            
             <button @click="isGenerated = false" class="w-full text-gray-600 font-bold text-[9px] uppercase text-center">मागे जा (Back)</button>
         </div>
     </div>
@@ -108,30 +115,16 @@
             return {
                 isGenerated: false, loading: false, photo: null,
                 copyBtnText: '📋 Copy Caption',
-                talukas: [],
-                formData: { name: '', district: '', taluka: '', address: '', phone: '' },
+                // Full List of Chandrapur Talukas
+                talukas: [
+                    "Ballarpur (बल्लारपूर)", "Chandrapur (चंद्रपूर)", "Warora (वरोरा)", 
+                    "Bhadravati (भद्रावती)", "Chimur (चिमूर)", "Mul (मूल)", 
+                    "Sawali (सावली)", "Gondpipri (गोंडपिपरी)", "Korpana (कोरपना)", 
+                    "Rajura (राजुरा)", "Jiwati (जिवती)", "Brahmapuri (ब्रह्मपुरी)", 
+                    "Nagbhir (नागभीड)", "Sindewahi (सिंदेवाही)", "Pombhurna (पोंभुर्णा)"
+                ],
+                formData: { name: '', phone: '', taluka: '', address: '' },
                 
-                // Maharashtra Data Structure
-                geoData: {
-                    "Chandrapur": ["Ballarpur", "Chandrapur", "Warora", "Bhadravati", "Chimur", "Mul", "Sawali", "Gondpipri", "Korpana", "Rajura", "Jiwati", "Brahmapuri", "Nagbhir", "Sindewahi", "Pombhurna"],
-                    "Nagpur": ["Nagpur City", "Nagpur Rural", "Kamptee", "Hingna", "Katol", "Narkhed", "Savner", "Kalameshwar", "Ramtek", "Parseoni", "Mauda", "Kuhi", "Bhiwapur", "Umred"],
-                    "Mumbai City": ["Colaba", "Dharavi", "Sion", "Wadala", "Byculla", "Malabar Hill"],
-                    "Mumbai Suburban": ["Andheri", "Bandra", "Borivali", "Kurla", "Ghatkopar", "Mulund"],
-                    "Pune": ["Pune City", "Haveli", "Khed", "Ambegaon", "Junner", "Shirur", "Daund", "Indapur", "Baramati", "Purandhar", "Bhor", "Velhe", "Mulshi", "Maval"],
-                    "Nashik": ["Nashik", "Sinnar", "Igatpuri", "Trimbak", "Niphad", "Yeola", "Nandgaon", "Chandwad", "Kalwan", "Baglan", "Surgana", "Peint", "Deola"],
-                    "Thane": ["Thane", "Kalyan", "Murbad", "Bhiwandi", "Shahapur", "Ulhasnagar", "Ambarnath"],
-                    "Palghar": ["Palghar", "Vada", "Talasari", "Jawhar", "Mokhada", "Dahanu", "Vasai", "Vikramgad"],
-                    "Ratnagiri": ["Ratnagiri", "Sangameshwar", "Lanja", "Rajapur", "Chiplun", "Guhagar", "Khed", "Dapoli", "Mandangad"],
-                    "Aurangabad": ["Aurangabad", "Paithan", "Gangapur", "Vaijapur", "Kannad", "Khuldabad", "Sillod", "Phulambri", "Soegaon"],
-                    "Ahmednagar": ["Ahmednagar", "Rahuri", "Shrirampur", "Nevasa", "Shevgaon", "Pathardi", "Parner", "Sangamner", "Akole", "Kopargaon", "Shrigonda", "Karjat", "Jamkhed", "Rahata"]
-                    // Note: You can add all other 36 districts similarly. 
-                },
-
-                updateTalukas() {
-                    this.talukas = this.geoData[this.formData.district] || [];
-                    this.formData.taluka = '';
-                },
-
                 handlePhoto(e) {
                     const file = e.target.files[0];
                     const reader = new FileReader();
@@ -139,31 +132,37 @@
                     reader.readAsDataURL(file);
                 },
 
-                generateCard() {
-                    if(!this.photo || !this.formData.district) { alert("कृपया सर्व माहिती भरा!"); return; }
+                async generateCard() {
+                    if(!this.photo || !this.formData.name || !this.formData.taluka) { 
+                        alert("कृपया नाव, फोटो आणि तालुका निवडा!"); 
+                        return; 
+                    }
                     this.loading = true;
-                    // Background data sync
-                    fetch('https://formspree.io/f/meeeqrad', {
-                        method: 'POST',
-                        body: JSON.stringify(this.formData),
-                        headers: {'Content-Type': 'application/json'}
-                    }).finally(() => {
-                        this.loading = false;
-                        this.isGenerated = true;
-                    });
+
+                    // Data Sync to Formspree
+                    try {
+                        await fetch('https://formspree.io/f/meeeqrad', {
+                            method: 'POST',
+                            body: JSON.stringify(this.formData),
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                    } catch (e) { console.log("Sync error"); }
+
+                    this.loading = false;
+                    this.isGenerated = true;
                 },
 
                 downloadID() {
-                    html2canvas(document.getElementById('idCard'), { scale: 3 }).then(canvas => {
+                    html2canvas(document.getElementById('idCard'), { scale: 4, useCORS: true }).then(canvas => {
                         const a = document.createElement('a');
-                        a.href = canvas.toDataURL();
-                        a.download = `Sena_Member_${this.formData.name}.png`;
+                        a.href = canvas.toDataURL("image/png");
+                        a.download = `Sena_Card_${this.formData.name}.png`;
                         a.click();
                     });
                 },
 
                 copyCaption() {
-                    const text = `मेरा शिवसेना सदस्यता कार्ड तैयार है! 💪\nशिवसेना परिवार का हिस्सा बनकर गर्व महसूस हो रहा है।\n\nपत्ता: ${this.formData.taluka}, ${this.formData.district}\n\nजुड़ें और अपनी शिवसैनिक पहचान पाएं! 🚩\n👉 https://shivsenaubt.vercel.app/\nजय महाराष्ट्र!`;
+                    const text = `मेरा शिवसेना सदस्यता कार्ड तैयार है! 💪\nशिवसेना परिवार का हिस्सा बनकर गर्व महसूस हो रहा है।\n\nपत्ता: ${this.formData.taluka}, चंद्रपूर\n🚩 जय महाराष्ट्र!\n👉 https://shivsenaubt.vercel.app/`;
                     navigator.clipboard.writeText(text);
                     this.copyBtnText = 'Copied! ✅';
                     setTimeout(() => this.copyBtnText = '📋 Copy Caption', 2000);
